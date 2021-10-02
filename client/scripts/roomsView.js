@@ -32,6 +32,10 @@ var RoomsView = {
 
   handleClick: function(event) {
     // TODO: Handle the user clicking the "Add Room" button.
+    var roomName = prompt('Please enter a room name:');
+    if (roomName !== null || roomName !== '') {
+      Rooms.add(roomName);
+    }
   }
 
 };

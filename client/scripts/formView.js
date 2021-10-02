@@ -5,9 +5,11 @@
 var FormView = {
 
   $form: $('form'),
+  $message: $('#message'),
 
   initialize: function() {
     FormView.$form.on('submit', FormView.handleSubmit);
+    //FormView.$form.submit(FormView.handleSubmit);
   },
 
   handleSubmit: function(event) {
@@ -16,13 +18,24 @@ var FormView = {
 
     // TODO: Currently, this is all handleSubmit does.
     // Make this function actually send a message to the Parse API.
-  
-    console.log('click!');
+    //var textMessage = FormView.$message.text();
+    Parse.create(FormView.createMessage(), (data) => {
+      console.log(data);
+      Messages.add(data[0], MessagesView.render);
+    });
   },
 
   setStatus: function(active) {
     var status = active ? 'true' : null;
     FormView.$form.find('input[type=submit]').attr('disabled', status);
-  }
+  },
 
+  createMessage: function () {
+    var message = {
+      username: App.username,
+      text: FormView.$message.val(),
+      roomname: Rooms._selected || 'lobby'
+    };
+    return message;
+  }
 };
