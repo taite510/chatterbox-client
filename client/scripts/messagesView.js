@@ -11,11 +11,15 @@ var MessagesView = {
   },
 
   render: function() {
+    MessagesView.$chats.html('');
+    _.each(Messages.get(), MessagesView.renderMessage);
     // TODO: Render _all_ the messages.
   },
 
   renderMessage: function(message) {
     // TODO: Render a single message.
+    var $message = MessageView.render(message);
+    MessagesView.$chats.append($message);
   },
 
   handleClick: function(event) {
